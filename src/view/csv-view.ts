@@ -286,6 +286,7 @@ export class CsvView extends WorkspaceView {
     })
 
     this.setupCellDelegation()
+    this.setupReorder()
     this.setupHeaderContextMenu()
     this.setupGlobalListeners()
   }
@@ -458,21 +459,12 @@ export class CsvView extends WorkspaceView {
       tableData: this.tableData,
       columnWidths: this.columnWidths,
       tableEl: this.tableEl,
-      requestSave: () => this.requestSave(),
       onEditCell: (row, col) => this.cellEditor.begin(row, col),
       onEditHeader: col => this.cellEditor.begin(0, col),
       virtualWindow: this.buildVirtualWindow(),
       firstRowAsHeader: this.firstRowAsHeader,
-      selectRow: index => this.highlightManager.selectRow(index),
-      selectColumn: index => this.highlightManager.selectColumn(index),
       getColumnLabel: index => TableUtils.getColumnLabel(index),
       setupColumnResize: (handle, col) => this.setupColumnResize(handle, col),
-      insertRowAt: (index, after = false) => this.insertRowAt(index, after),
-      deleteRowAt: index => this.deleteRowAt(index),
-      insertColAt: (index, after = false) => this.insertColAt(index, after),
-      deleteColAt: index => this.deleteColAt(index),
-      onColumnReorder: (from, to) => this.reorderColumn(from, to),
-      onRowReorder: (from, to) => this.reorderRow(from, to),
       stickyRows: this.stickyRows,
       stickyColumns: this.stickyColumns,
       toggleRowSticky: index => this.toggleRowSticky(index),
@@ -559,6 +551,123 @@ export class CsvView extends WorkspaceView {
       this.updateTopScrollWidth()
     }
     handle.addEventListener('mousedown', onMouseDown)
+  }
+
+  /**
+   * Row / column reordering via mouse drag. HTML5 drag-and-drop is unreliable
+   * inside Typora's Electron webview, so we reuse the same mouse-event approach
+   * as the column resizer. Dragging a row-number / column-header cell reorders
+   * it; a plain click (no movement) selects the row/column instead.
+   */
+  private setupReorder(): void {
+    this.registerDomEvent(this.tableEl, 'mousedown', (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null
+      if (!target) return
+      if (target.closest('.typ-csv-pin-btn') || target.closest('.typ-csv-resize-handle')) return
+
+      const rowCell = target.closest('.typ-csv-row-number') as HTMLElement | null
+      const colCell = target.closest('.typ-csv-col-number') as HTMLElement | null
+      if (!rowCell && !colCell) return
+
+      const type: 'row' | 'col' = rowCell ? 'row' : 'col'
+      let fromIndex: number
+      if (rowCell) {
+        const tr = rowCell.closest('tr') as HTMLElement | null
+        fromIndex = tr ? Number(tr.dataset.row) : NaN
+      } else {
+        fromIndex = this.getColumnHeaderCells().indexOf(colCell as HTMLElement)
+      }
+      if (Number.isNaN(fromIndex) || fromIndex < 0) return
+
+      e.preventDefault()
+
+      const startX = e.clientX
+      const startY = e.clientY
+      let moved = false
+      let targetIndex = -1
+
+      const getCells = (index: number): HTMLElement[] =>
+        type === 'row' ? this.getRowCells(index) : this.getColumnCells(index)
+
+      const clearIndicators = () => {
+        queryAll<HTMLElement>(
+          this.tableEl,
+          '.typ-csv-dragging-highlight, .typ-csv-drag-source, .typ-csv-drag-line-top, .typ-csv-drag-line-bottom, .typ-csv-drag-line-left, .typ-csv-drag-line-right',
+        ).forEach(el =>
+          el.classList.remove(
+            'typ-csv-dragging-highlight',
+            'typ-csv-drag-source',
+            'typ-csv-drag-line-top',
+            'typ-csv-drag-line-bottom',
+            'typ-csv-drag-line-left',
+            'typ-csv-drag-line-right',
+          ),
+        )
+      }
+      const updateIndicators = () => {
+        clearIndicators()
+        getCells(fromIndex).forEach(el => el.classList.add('typ-csv-drag-source'))
+        if (targetIndex < 0 || targetIndex === fromIndex) return
+        const before = targetIndex < fromIndex
+        const lineCls =
+          type === 'row'
+            ? before ? 'typ-csv-drag-line-top' : 'typ-csv-drag-line-bottom'
+            : before ? 'typ-csv-drag-line-left' : 'typ-csv-drag-line-right'
+        getCells(targetIndex).forEach(el => {
+          el.classList.add('typ-csv-dragging-highlight')
+          el.classList.add(lineCls)
+        })
+      }
+      const onMouseMove = (ev: MouseEvent) => {
+        if (!moved && Math.abs(ev.clientX - startX) + Math.abs(ev.clientY - startY) < 5) return
+        if (!moved) {
+          moved = true
+          this.containerEl.classList.add('typ-csv-reordering')
+        }
+        const el = document.elementFromPoint(ev.clientX, ev.clientY) as HTMLElement | null
+        if (type === 'row') {
+          const tr = el?.closest('tr.typ-csv-data-row') as HTMLElement | null
+          targetIndex = tr ? Number(tr.dataset.row) : -1
+        } else {
+          const th = el?.closest('.typ-csv-col-number') as HTMLElement | null
+          targetIndex = th ? this.getColumnHeaderCells().indexOf(th) : -1
+        }
+        updateIndicators()
+      }
+      const onMouseUp = () => {
+        document.removeEventListener('mousemove', onMouseMove)
+        document.removeEventListener('mouseup', onMouseUp)
+        clearIndicators()
+        this.containerEl.classList.remove('typ-csv-reordering')
+        if (!moved) {
+          if (type === 'row') this.highlightManager.selectRow(fromIndex)
+          else this.highlightManager.selectColumn(fromIndex)
+          return
+        }
+        if (targetIndex >= 0 && targetIndex !== fromIndex) {
+          if (type === 'row') this.reorderRow(fromIndex, targetIndex)
+          else this.reorderColumn(fromIndex, targetIndex)
+        }
+      }
+      document.addEventListener('mousemove', onMouseMove)
+      document.addEventListener('mouseup', onMouseUp)
+    })
+  }
+
+  private getColumnHeaderCells(): HTMLElement[] {
+    return queryAll<HTMLElement>(this.tableEl, 'thead tr .typ-csv-col-number')
+  }
+
+  private getRowCells(rowIndex: number): HTMLElement[] {
+    const tr = query<HTMLElement>(this.tableEl, `tbody tr[data-row="${rowIndex}"]`)
+    return tr ? (Array.from(tr.children) as HTMLElement[]) : []
+  }
+
+  private getColumnCells(colIndex: number): HTMLElement[] {
+    return queryAll<HTMLElement>(
+      this.tableEl,
+      `thead tr th:nth-child(${colIndex + 2}), tbody tr.typ-csv-data-row td:nth-child(${colIndex + 2})`,
+    )
   }
 
   // =========================================================================

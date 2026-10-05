@@ -60,14 +60,19 @@ table.typ-csv-table {
   width: var(--typ-csv-row-number-width);
   min-width: var(--typ-csv-row-number-width);
   position: relative;
-  cursor: pointer;
+  cursor: grab;
 }
 
 .typ-csv-col-number {
   height: var(--typ-csv-header-height);
   position: relative;
-  cursor: pointer;
+  cursor: grab;
   background: var(--typ-csv-header-bg);
+}
+
+.typ-csv-row-number:active,
+.typ-csv-col-number:active {
+  cursor: grabbing;
 }
 
 .typ-csv-header-cell {
@@ -230,16 +235,34 @@ table.typ-csv-table th.typ-csv-editing {
   opacity: 1;
 }
 
-// --- Drag feedback -----------------------------------------------------------
-.typ-csv-table .dragging {
+// --- Drag reorder feedback ---------------------------------------------------
+.typ-csv-drag-source {
   opacity: 0.5;
 }
-.typ-csv-table .drag-over {
-  outline: 2px dashed var(--typ-csv-accent);
-  outline-offset: -2px;
-}
+
 .typ-csv-dragging-highlight {
   background: var(--typ-csv-hover-bg);
+}
+
+// Insertion line on the drop-target row / column.
+.typ-csv-drag-line-top {
+  box-shadow: inset 0 2px 0 0 var(--typ-csv-accent);
+}
+.typ-csv-drag-line-bottom {
+  box-shadow: inset 0 -2px 0 0 var(--typ-csv-accent);
+}
+.typ-csv-drag-line-left {
+  box-shadow: inset 2px 0 0 0 var(--typ-csv-accent);
+}
+.typ-csv-drag-line-right {
+  box-shadow: inset -2px 0 0 0 var(--typ-csv-accent);
+}
+
+// Grab cursor everywhere while reordering.
+.typ-csv-view.typ-csv-reordering,
+.typ-csv-view.typ-csv-reordering * {
+  cursor: grabbing !important;
+  user-select: none;
 }
 
 // --- Virtual spacers ---------------------------------------------------------

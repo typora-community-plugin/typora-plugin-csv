@@ -6,15 +6,8 @@ export interface TableRenderOptions {
   tableData: string[][]
   columnWidths: number[]
   tableEl: HTMLElement
-  requestSave: () => void
-  selectRow: (rowIndex: number) => void
-  selectColumn: (colIndex: number) => void
   getColumnLabel: (index: number) => string
   setupColumnResize: (handle: HTMLElement, columnIndex: number) => void
-  insertRowAt: (rowIndex: number, after?: boolean) => void
-  deleteRowAt: (rowIndex: number) => void
-  insertColAt: (colIndex: number, after?: boolean) => void
-  deleteColAt: (colIndex: number) => void
   /** Called when the ✎ edit button of a URL cell is clicked. */
   onEditCell?: (row: number, col: number, td: HTMLElement) => void
   /** Called on double-click of a header cell in header-row mode. */
@@ -23,20 +16,11 @@ export interface TableRenderOptions {
   virtualWindow?: { start: number; end: number; topPad: number; bottomPad: number }
   /** Render row 0 into `<thead>` and start tbody at row 1. */
   firstRowAsHeader?: boolean
-  onColumnReorder?: (from: number, to: number) => void
-  onRowReorder?: (from: number, to: number) => void
   stickyRows?: Set<number>
   stickyColumns?: Set<number>
   toggleRowSticky?: (rowIndex: number) => void
   toggleColumnSticky?: (colIndex: number) => void
 }
-
-/** Shared drag state, read by renderTable to preserve highlight after re-render. */
-interface DragState {
-  type: 'row' | 'col' | null
-  index: number | null
-}
-const dragState: DragState = { type: null, index: null }
 
 /** Render a read-only display layer for a cell (links remain clickable). */
 export function renderCellDisplay(td: HTMLElement, cell: string, onEditClick?: () => void): void {
@@ -56,29 +40,17 @@ export function renderTable(options: TableRenderOptions): void {
     tableData,
     columnWidths,
     tableEl,
-    requestSave,
-    selectRow,
-    selectColumn,
     getColumnLabel,
     setupColumnResize,
     onEditCell,
     onEditHeader,
     virtualWindow,
     firstRowAsHeader,
-    onColumnReorder,
-    onRowReorder,
     stickyRows,
     stickyColumns,
     toggleRowSticky,
     toggleColumnSticky,
   } = options
-
-  const setDragState = (type: 'row' | 'col' | null, index: number | null) => {
-    dragState.type = type
-    dragState.index = index
-    tableEl.classList.toggle('typ-csv-dragging-row', type === 'row')
-    tableEl.classList.toggle('typ-csv-dragging-col', type === 'col')
-  }
 
   if (columnWidths.length === 0 && tableData[0]) {
     columnWidths.push(...TableUtils.calculateColumnWidths(tableData))
@@ -94,7 +66,7 @@ export function renderTable(options: TableRenderOptions): void {
     tableData[0].forEach((headerCell, index) => {
       const th = createEl('th', {
         cls: 'typ-csv-col-number',
-        attr: { style: `width: ${columnWidths[index] || 100}px`, draggable: 'true' },
+        attr: { style: `width: ${columnWidths[index] || 100}px` },
         parent: headerRow,
       })
       if (firstRowAsHeader) {
@@ -111,10 +83,6 @@ export function renderTable(options: TableRenderOptions): void {
         th.textContent = getColumnLabel(index)
       }
 
-      th.onclick = e => {
-        e.stopPropagation()
-        selectColumn(index)
-      }
       if (firstRowAsHeader && onEditHeader) {
         th.ondblclick = e => {
           e.stopPropagation()
@@ -134,36 +102,6 @@ export function renderTable(options: TableRenderOptions): void {
           toggleColumnSticky(index)
         }
         th.appendChild(pinBtn)
-      }
-
-      th.ondragstart = e => {
-        e.dataTransfer?.setData('text/col-index', String(index))
-        th.classList.add('dragging')
-        setDragState('col', index)
-      }
-      th.ondragend = () => {
-        th.classList.remove('dragging')
-        setDragState(null, null)
-        requestSave()
-      }
-      th.ondragover = e => {
-        e.preventDefault()
-        th.classList.add('drag-over')
-      }
-      th.ondragleave = () => th.classList.remove('drag-over')
-      th.ondrop = e => {
-        e.preventDefault()
-        th.classList.remove('drag-over')
-        setDragState(null, null)
-        const from = Number(e.dataTransfer?.getData('text/col-index'))
-        const to = index
-        if (onColumnReorder && from !== to) onColumnReorder(from, to)
-      }
-
-      if (dragState.type === 'col' && dragState.index !== null) {
-        const colStart = Math.max(0, dragState.index - 2)
-        const colEnd = Math.min(tableData[0].length - 1, dragState.index + 2)
-        if (index >= colStart && index <= colEnd) th.classList.add('typ-csv-dragging-highlight')
       }
 
       const resizeHandle = createEl('div', { cls: 'typ-csv-resize-handle' })
@@ -204,13 +142,8 @@ export function renderTable(options: TableRenderOptions): void {
     const rowNumberCell = createEl('td', {
       cls: 'typ-csv-row-number',
       text: i.toString(),
-      attr: { draggable: 'true' },
       parent: tableRow,
     })
-    rowNumberCell.onclick = e => {
-      e.stopPropagation()
-      selectRow(i)
-    }
 
     if (toggleRowSticky) {
       const isSticky = stickyRows?.has(i) || false
@@ -224,39 +157,6 @@ export function renderTable(options: TableRenderOptions): void {
         toggleRowSticky(i)
       }
       rowNumberCell.appendChild(pinBtn)
-    }
-
-    rowNumberCell.ondragstart = e => {
-      e.dataTransfer?.setData('text/row-index', String(i))
-      rowNumberCell.classList.add('dragging')
-      setDragState('row', i)
-    }
-    rowNumberCell.ondragend = () => {
-      rowNumberCell.classList.remove('dragging')
-      setDragState(null, null)
-      requestSave()
-    }
-    rowNumberCell.ondragover = e => {
-      e.preventDefault()
-      rowNumberCell.classList.add('drag-over')
-    }
-    rowNumberCell.ondragleave = () => rowNumberCell.classList.remove('drag-over')
-    rowNumberCell.ondrop = e => {
-      e.preventDefault()
-      rowNumberCell.classList.remove('drag-over')
-      setDragState(null, null)
-      const from = Number(e.dataTransfer?.getData('text/row-index'))
-      const to = i
-      if (onRowReorder && from !== to) onRowReorder(from, to)
-    }
-
-    if (dragState.type === 'row' && dragState.index !== null) {
-      const rowStart = Math.max(0, dragState.index - 2)
-      const rowEnd = Math.min(tableData.length - 1, dragState.index + 2)
-      if (i >= rowStart && i <= rowEnd) {
-        rowNumberCell.classList.add('typ-csv-dragging-highlight')
-        Array.from(tableRow.children).forEach(td => td.classList.add('typ-csv-dragging-highlight'))
-      }
     }
 
     row.forEach((cell, j) => {
