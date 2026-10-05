@@ -1,0 +1,6 @@
+site,url,notes
+GitHub,https://github.com,Popular
+Google,https://www.google.com/search?q=test,Search query
+Docs,[Obsidian](https://obsidian.md),Markdown link
+Mixed,See [core](https://github.com/typora-community-plugin/core) and https://typora.io,mixed links
+Plain,no url here,done

@@ -1,0 +1,6 @@
+name,description,tags
+"Smith, John","Contains a comma, and more",a;b;c
+"Multi-line","Line one
+line two","x,y"
+"Quoted ""quotes""","He said ""hello"" then left","q"
+"Plain",simple,noquotes

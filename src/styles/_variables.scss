@@ -1,0 +1,85 @@
+// =============================================================================
+// typora-plugin-csv · Design Tokens
+// -----------------------------------------------------------------------------
+// All colors are consumed from Typora's internal CSS variables so the plugin
+// follows light / dark themes automatically. No hardcoded color values.
+// =============================================================================
+
+:root {
+  // --- Surfaces -------------------------------------------------------------
+  --typ-csv-bg: var(--bg-color);
+  --typ-csv-header-bg: var(--table-header-bg-color, var(--bg-color));
+  --typ-csv-row-number-bg: var(--table-header-bg-color, var(--bg-color));
+  --typ-csv-hover-bg: var(--item-hover-bg-color);
+  --typ-csv-sticky-row-bg: var(--bg-color);
+  --typ-csv-sticky-cross-bg: var(--item-hover-bg-color);
+
+  // --- Text ----------------------------------------------------------------
+  --typ-csv-text: var(--text-color);
+  --typ-csv-muted: var(--control-text-color, var(--text-color));
+  --typ-csv-faint: var(--md-char-color, var(--text-color));
+
+  // --- Borders -------------------------------------------------------------
+  --typ-csv-border: var(--table-border-color, var(--window-border)); 
+
+  // --- Accent / selection --------------------------------------------------
+  --typ-csv-accent: var(--primary-color);
+  --typ-csv-accent-text: var(--primary-btn-text-color, var(--bg-color));
+  --typ-csv-selection-bg: var(--select-text-bg-color, var(--primary-color));
+  --typ-csv-active-file-border: var(--active-file-border-color);
+  // Search match highlight: translucent yellow so text stays readable in both
+  // light and dark themes (Typora has no reliable themed token for this).
+  --typ-csv-search-highlight: rgba(255, 235, 59, 0.4);
+
+  // --- Links ---------------------------------------------------------------
+  --typ-csv-link: var(--primary-color);
+
+  // --- Spacing scale -------------------------------------------------------
+  --typ-csv-space-1: 2px;
+  --typ-csv-space-2: 4px;
+  --typ-csv-space-3: 6px;
+  --typ-csv-space-4: 8px;
+  --typ-csv-space-5: 12px;
+  --typ-csv-space-6: 16px;
+
+  // --- Radius scale --------------------------------------------------------
+  --typ-csv-radius-1: 3px;
+  --typ-csv-radius-2: 5px;
+  --typ-csv-radius-3: 8px;
+
+  // --- Typography scale ----------------------------------------------------
+  --typ-csv-font-size-xs: 11px;
+  --typ-csv-font-size-sm: 12px;
+  --typ-csv-font-size-md: 13px;
+  --typ-csv-font-size-lg: 14px;
+  --typ-csv-line-height: 1.5;
+
+  // --- Metrics -------------------------------------------------------------
+  --typ-csv-row-height: 28px;
+  --typ-csv-header-height: 28px;
+  --typ-csv-row-number-width: 48px;
+  --typ-csv-cell-min-width: 50px;
+  --typ-csv-cell-padding-x: 6px;
+  --typ-csv-cell-padding-y: 3px;
+  --typ-csv-resize-handle-width: 5px;
+
+  // --- Elevation (sticky shadows use currentColor-ish alpha via border) ----
+  --typ-csv-shadow: var(--window-border, var(--table-border-color));
+
+  // ===========================================================================
+  // Sticky z-index matrix (must match csv-lite layering)
+  // ===========================================================================
+  --typ-csv-z-cell: 1;
+  --typ-csv-z-scroll: 5;
+  --typ-csv-z-pin: 10;
+  --typ-csv-z-sticky: 15;
+  --typ-csv-z-sticky-both: 18;
+  --typ-csv-z-header: 20;
+  --typ-csv-z-toolbar: 20;
+  --typ-csv-z-header-sticky-col: 22;
+  --typ-csv-z-corner: 25;
+  --typ-csv-z-corner-both: 26;
+  --typ-csv-z-editor: 30;
+  --typ-csv-z-search: 1000;
+  --typ-csv-z-menu: 9999;
+}

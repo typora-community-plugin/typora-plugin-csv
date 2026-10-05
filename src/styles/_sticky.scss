@@ -1,0 +1,63 @@
+// Sticky headers / row numbers / user-pinned rows & columns.
+// z-index matrix is defined in _variables.scss as --typ-csv-z-*.
+.typ-csv-table {
+  th.typ-csv-sticky-header,
+  td.typ-csv-sticky-row-number,
+  th.typ-csv-sticky-row-number,
+  th.typ-csv-sticky-col,
+  td.typ-csv-sticky-col,
+  td.typ-csv-sticky-row {
+    position: sticky;
+    background-clip: padding-box;
+  }
+
+  th.typ-csv-sticky-header {
+    top: 0;
+    z-index: var(--typ-csv-z-header);
+    background: var(--typ-csv-header-bg);
+    border-bottom: 1px solid var(--typ-csv-border);
+  }
+
+  td.typ-csv-sticky-row-number,
+  th.typ-csv-sticky-row-number {
+    left: 0;
+    z-index: var(--typ-csv-z-header);
+    background: var(--typ-csv-row-number-bg);
+    border-right: 1px solid var(--typ-csv-border);
+  }
+
+  th.typ-csv-sticky-header.typ-csv-sticky-row-number {
+    top: 0;
+    left: 0;
+    z-index: var(--typ-csv-z-corner);
+    background: var(--typ-csv-header-bg);
+  }
+
+  th.typ-csv-sticky-header.typ-csv-sticky-col {
+    z-index: var(--typ-csv-z-header-sticky-col);
+    background: var(--typ-csv-header-bg);
+  }
+
+  td.typ-csv-sticky-row {
+    z-index: var(--typ-csv-z-sticky);
+    background: var(--typ-csv-sticky-row-bg);
+    border-bottom: 1px solid var(--typ-csv-accent);
+  }
+
+  td.typ-csv-sticky-col,
+  th.typ-csv-sticky-col {
+    z-index: var(--typ-csv-z-sticky);
+    background: var(--typ-csv-sticky-row-bg);
+    border-right: 1px solid var(--typ-csv-accent);
+  }
+
+  td.typ-csv-sticky-row.typ-csv-sticky-col {
+    z-index: var(--typ-csv-z-sticky-both);
+    background: var(--typ-csv-sticky-cross-bg);
+  }
+
+  // Corner intersection of header + user sticky column stays on top.
+  th.typ-csv-sticky-header.typ-csv-sticky-row-number.typ-csv-sticky-col {
+    z-index: var(--typ-csv-z-corner-both);
+  }
+}

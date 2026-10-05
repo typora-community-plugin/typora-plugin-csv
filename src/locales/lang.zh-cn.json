@@ -1,0 +1,74 @@
+{
+  "buttons": {
+    "undo": "撤销",
+    "redo": "重做",
+    "resetColumnWidth": "重置列宽",
+    "addRow": "添加行",
+    "deleteRow": "删除行",
+    "addColumn": "添加列",
+    "deleteColumn": "删除列",
+    "sourceMode": "源码模式",
+    "tableMode": "表格模式",
+    "toggleHeaderRow": "首行为表头",
+    "toggleHeaderRowOn": "将首行作为表头显示",
+    "toggleHeaderRowOff": "取消首行表头"
+  },
+  "editBar": {
+    "placeholder": "编辑选中单元格..."
+  },
+  "csv": {
+    "error": "错误",
+    "parsingFailed": "CSV 解析失败，请检查文件格式",
+    "parseWarning": "CSV 解析提示:"
+  },
+  "settings": {
+    "title": "CSV",
+    "fieldSeparator": "字段分隔符",
+    "fieldSeparatorDesc": "用于分隔字段的字符（逗号、分号、制表符或竖线）。",
+    "quoteChar": "引号字符",
+    "quoteCharDesc": "用于包围含有特殊字符的字段。",
+    "delimiterAuto": "自动",
+    "delimiterComma": "逗号 (,)",
+    "delimiterSemicolon": "分号 (;)",
+    "delimiterTab": "制表符 (\\t)",
+    "delimiterPipe": "竖线 (|)"
+  },
+  "search": {
+    "placeholder": "搜索表格内容...",
+    "noResults": "未找到匹配结果",
+    "moreResults": "还有 {count} 个结果...",
+    "rowColumn": "第 {row} 行，第 {col} 列"
+  },
+  "table": {
+    "headerRow": "表头行",
+    "dataRow": "数据行"
+  },
+  "contextMenu": {
+    "insertRowAbove": "上方插入行",
+    "insertRowBelow": "下方插入行",
+    "deleteRow": "删除本行",
+    "moveRowUp": "向上移动一行",
+    "moveRowDown": "向下移动一行",
+    "insertColLeft": "左侧插入列",
+    "insertColRight": "右侧插入列",
+    "deleteCol": "删除本列",
+    "moveColLeft": "向左移动一列",
+    "moveColRight": "向右移动一列"
+  },
+  "commands": {
+    "createNewCsv": "创建新 CSV 文件",
+    "openAsTable": "以 CSV 表格打开",
+    "fileExists": "文件已存在",
+    "createFailed": "创建文件失败"
+  },
+  "notifications": {
+    "undo": "已撤销上一步操作",
+    "noMoreUndo": "没有更多可撤销的操作",
+    "redo": "已重做操作",
+    "noMoreRedo": "没有更多可重做的操作",
+    "virtualDisabledBySticky": "已固定行，因此对该文件关闭了行虚拟化，大文件可能变慢。取消固定行即可恢复。",
+    "headerRowProtected": "表头行不能被移动、删除或覆盖。",
+    "saveFailed": "保存 CSV 文件失败：{message}",
+    "loadFailed": "加载 CSV 文件失败：{message}"
+  }
+}

@@ -1,0 +1,89 @@
+// In-table search bar & result panel.
+.typ-csv-search-bar-container {
+  position: relative;
+  flex: 1 1 180px;
+  min-width: 160px;
+}
+
+.typ-csv-search-container {
+  position: relative;
+  width: 100%;
+}
+
+.typ-csv-search-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 26px;
+  border: 1px solid var(--typ-csv-border);
+  border-radius: var(--typ-csv-radius-2);
+  background: var(--typ-csv-bg);
+  color: var(--typ-csv-text);
+  padding: 0 var(--typ-csv-space-3);
+  font: inherit;
+  &:focus {
+    border-color: var(--typ-csv-accent);
+    outline: none;
+  }
+}
+
+.typ-csv-search-results {
+  display: none;
+  position: absolute;
+  top: calc(100% + var(--typ-csv-space-2));
+  right: 0;
+  width: 320px;
+  max-height: 320px;
+  overflow-y: auto;
+  z-index: var(--typ-csv-z-search);
+  background: var(--typ-csv-bg);
+  border: 1px solid var(--typ-csv-border);
+  border-radius: var(--typ-csv-radius-2);
+  box-shadow: 0 4px 12px var(--typ-csv-shadow);
+  &.show {
+    display: block;
+  }
+}
+
+.typ-csv-search-result-item {
+  padding: var(--typ-csv-space-3) var(--typ-csv-space-4);
+  cursor: pointer;
+  border-bottom: 1px solid var(--typ-csv-border);
+  &:hover,
+  &.typ-csv-search-result-hover {
+    background: var(--typ-csv-hover-bg);
+  }
+}
+
+.typ-csv-search-result-cell {
+  color: var(--typ-csv-accent);
+  font-weight: bold;
+  margin-right: var(--typ-csv-space-3);
+}
+
+.typ-csv-search-result-address {
+  color: var(--typ-csv-faint);
+  font-size: var(--typ-csv-font-size-xs);
+}
+
+.typ-csv-search-result-preview {
+  margin-top: var(--typ-csv-space-1);
+  font-size: var(--typ-csv-font-size-sm);
+  color: var(--typ-csv-muted);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.typ-csv-search-highlight {
+  background: var(--typ-csv-search-highlight);
+  color: var(--typ-csv-text);
+}
+
+.typ-csv-search-result-empty {
+  color: var(--typ-csv-faint);
+  cursor: default;
+}
+.typ-csv-search-result-more {
+  color: var(--typ-csv-faint);
+  cursor: default;
+}

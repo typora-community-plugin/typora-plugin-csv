@@ -1,0 +1,74 @@
+{
+  "buttons": {
+    "undo": "Rückgängig",
+    "redo": "Wiederholen",
+    "resetColumnWidth": "Spaltenbreite zurücksetzen",
+    "addRow": "Zeile hinzufügen",
+    "deleteRow": "Zeile löschen",
+    "addColumn": "Spalte hinzufügen",
+    "deleteColumn": "Spalte löschen",
+    "sourceMode": "Quelltextmodus",
+    "tableMode": "Tabellenmodus",
+    "toggleHeaderRow": "Kopfzeile",
+    "toggleHeaderRowOn": "Erste Zeile als Kopfzeile verwenden",
+    "toggleHeaderRowOff": "Erste Zeile nicht mehr als Kopfzeile verwenden"
+  },
+  "editBar": {
+    "placeholder": "Ausgewählte Zelle bearbeiten..."
+  },
+  "csv": {
+    "error": "Fehler",
+    "parsingFailed": "CSV konnte nicht analysiert werden. Bitte das Dateiformat prüfen.",
+    "parseWarning": "CSV-Analysewarnung:"
+  },
+  "settings": {
+    "title": "CSV",
+    "fieldSeparator": "Feldtrennzeichen",
+    "fieldSeparatorDesc": "Das Zeichen, das Felder trennt (Komma, Semikolon, Tabulator oder senkrechter Strich).",
+    "quoteChar": "Anführungszeichen",
+    "quoteCharDesc": "Zeichen, das Felder mit Sonderzeichen umschließt.",
+    "delimiterAuto": "Automatisch",
+    "delimiterComma": "Komma (,)",
+    "delimiterSemicolon": "Semikolon (;)",
+    "delimiterTab": "Tabulator (\\t)",
+    "delimiterPipe": "Senkrechter Strich (|)"
+  },
+  "search": {
+    "placeholder": "Tabelleninhalt durchsuchen...",
+    "noResults": "Keine passenden Ergebnisse gefunden",
+    "moreResults": "{count} weitere Ergebnisse...",
+    "rowColumn": "Zeile {row}, Spalte {col}"
+  },
+  "table": {
+    "headerRow": "Kopfzeile",
+    "dataRow": "Datenzeile"
+  },
+  "contextMenu": {
+    "insertRowAbove": "Zeile oberhalb einfügen",
+    "insertRowBelow": "Zeile unterhalb einfügen",
+    "deleteRow": "Diese Zeile löschen",
+    "moveRowUp": "Zeile nach oben verschieben",
+    "moveRowDown": "Zeile nach unten verschieben",
+    "insertColLeft": "Spalte links einfügen",
+    "insertColRight": "Spalte rechts einfügen",
+    "deleteCol": "Diese Spalte löschen",
+    "moveColLeft": "Spalte nach links verschieben",
+    "moveColRight": "Spalte nach rechts verschieben"
+  },
+  "commands": {
+    "createNewCsv": "Neue CSV-Datei erstellen",
+    "openAsTable": "Als CSV-Tabelle öffnen",
+    "fileExists": "Datei existiert bereits",
+    "createFailed": "Datei konnte nicht erstellt werden"
+  },
+  "notifications": {
+    "undo": "Letzte Aktion rückgängig gemacht",
+    "noMoreUndo": "Es gibt nichts mehr rückgängig zu machen",
+    "redo": "Aktion wiederholt",
+    "noMoreRedo": "Es gibt nichts mehr zu wiederholen",
+    "virtualDisabledBySticky": "Zeilen sind angeheftet, daher ist die Zeilen-Virtualisierung für diese Datei deaktiviert – große Dateien können langsam sein. Zeilen lösen, um sie wieder zu aktivieren.",
+    "headerRowProtected": "Die Kopfzeile kann nicht verschoben, gelöscht oder überschrieben werden.",
+    "saveFailed": "CSV-Datei konnte nicht gespeichert werden: {message}",
+    "loadFailed": "CSV-Datei konnte nicht geladen werden: {message}"
+  }
+}

@@ -1,0 +1,111 @@
+// Toolbar, buttons, edit bar, top scroll bar.
+.typ-csv-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: var(--typ-csv-bg);
+  color: var(--typ-csv-text);
+}
+
+.typ-csv-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--typ-csv-z-toolbar);
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--typ-csv-space-2);
+  padding: var(--typ-csv-space-3) var(--typ-csv-space-4);
+  background: var(--typ-csv-bg);
+  border-bottom: 1px solid var(--typ-csv-border);
+}
+
+.typ-csv-operation-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--typ-csv-space-4);
+}
+
+.typ-csv-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: var(--typ-csv-space-2);
+  flex-wrap: wrap;
+}
+
+.typ-csv-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--typ-csv-space-2);
+  height: 26px;
+  padding: 0 var(--typ-csv-space-4);
+  border: 1px solid var(--typ-csv-border);
+  border-radius: var(--typ-csv-radius-2);
+  background: var(--typ-csv-bg);
+  color: var(--typ-csv-text);
+  font-size: var(--typ-csv-font-size-sm);
+  cursor: pointer;
+  transition: background 0.15s ease;
+  &:hover {
+    background: var(--typ-csv-hover-bg);
+  }
+}
+
+.typ-csv-toolbar .typ-csv-header-toggle.is-active {
+  background: var(--typ-csv-accent);
+  border-color: var(--typ-csv-accent);
+  color: var(--typ-csv-accent-text);
+}
+
+.typ-csv-delimiter-compact {
+  display: flex;
+  align-items: center;
+  select {
+    height: 26px;
+    border: 1px solid var(--typ-csv-border);
+    border-radius: var(--typ-csv-radius-2);
+    background: var(--typ-csv-bg);
+    color: var(--typ-csv-text);
+    font-size: var(--typ-csv-font-size-sm);
+  }
+}
+
+.typ-csv-edit-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--typ-csv-space-2);
+  flex: 1 1 220px;
+  min-width: 140px;
+}
+
+.typ-csv-edit-bar::before {
+  content: attr(data-cell-address);
+  flex: 0 0 auto;
+  min-width: 40px;
+  color: var(--typ-csv-faint);
+  font-size: var(--typ-csv-font-size-sm);
+}
+
+.typ-csv-edit-input {
+  flex: 1 1 auto;
+  height: 26px;
+  box-sizing: border-box;
+  border: 1px solid var(--typ-csv-border);
+  border-radius: var(--typ-csv-radius-2);
+  background: var(--typ-csv-bg);
+  color: var(--typ-csv-text);
+  padding: 0 var(--typ-csv-space-3);
+  font: inherit;
+  &:focus {
+    border-color: var(--typ-csv-accent);
+    outline: none;
+  }
+}
+
+.scroll-container.typ-csv-top-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 8px;
+}

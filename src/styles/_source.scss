@@ -1,0 +1,25 @@
+// Source (raw text) mode using a plain <textarea>.
+.typ-csv-source-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.typ-csv-source-textarea {
+  flex: 1 1 auto;
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;
+  border: none;
+  outline: none;
+  padding: var(--typ-csv-space-4);
+  background: var(--typ-csv-bg);
+  color: var(--typ-csv-text);
+  font-family: var(--monospace, monospace);
+  font-size: var(--typ-csv-font-size-md);
+  line-height: var(--typ-csv-line-height);
+  white-space: pre;
+  overflow: auto;
+  tab-size: 4;
+}

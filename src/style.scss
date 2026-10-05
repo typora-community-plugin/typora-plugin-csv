@@ -1,3 +1,9 @@
-.typ-example-cls {
-  color: red;
-}
+// typora-plugin-csv · style entry
+// Aggregates all partials. Imported once from `src/main.ts`.
+@use './styles/variables';
+@use './styles/table';
+@use './styles/toolbar';
+@use './styles/search';
+@use './styles/sticky';
+@use './styles/source';
+@use './styles/menu';

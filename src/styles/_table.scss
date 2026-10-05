@@ -1,0 +1,249 @@
+// Table grid, cells, headers, selection.
+.typ-csv-table-wrapper {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.typ-csv-table-container {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+  z-index: var(--typ-csv-z-scroll);
+}
+
+table.typ-csv-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  width: max-content;
+  font-size: var(--typ-csv-font-size-md);
+  line-height: var(--typ-csv-line-height);
+  color: var(--typ-csv-text);
+  background: var(--typ-csv-bg);
+
+  th,
+  td {
+    box-sizing: border-box;
+    border-right: 1px solid var(--typ-csv-border);
+    border-bottom: 1px solid var(--typ-csv-border);
+    padding: var(--typ-csv-cell-padding-y) var(--typ-csv-cell-padding-x);
+    font-weight: normal;
+    text-align: left;
+    vertical-align: top;
+    overflow: hidden;
+  }
+
+  tbody td.typ-csv-row-number,
+  thead th.typ-csv-col-number {
+    background: var(--typ-csv-row-number-bg);
+    color: var(--typ-csv-muted);
+    font-size: var(--typ-csv-font-size-sm);
+    text-align: center;
+    user-select: none;
+  }
+}
+
+.typ-csv-corner-cell {
+  width: var(--typ-csv-row-number-width);
+  min-width: var(--typ-csv-row-number-width);
+  height: var(--typ-csv-header-height);
+  background: var(--typ-csv-header-bg);
+}
+
+.typ-csv-data-row {
+  height: var(--typ-csv-row-height);
+}
+
+.typ-csv-row-number {
+  width: var(--typ-csv-row-number-width);
+  min-width: var(--typ-csv-row-number-width);
+  position: relative;
+  cursor: pointer;
+}
+
+.typ-csv-col-number {
+  height: var(--typ-csv-header-height);
+  position: relative;
+  cursor: pointer;
+  background: var(--typ-csv-header-bg);
+}
+
+.typ-csv-header-cell {
+  overflow: hidden;
+}
+
+.typ-csv-header-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--typ-csv-space-2);
+  overflow: hidden;
+}
+
+.typ-csv-col-letter {
+  color: var(--typ-csv-faint);
+  font-size: var(--typ-csv-font-size-xs);
+}
+
+.typ-csv-header-text {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.typ-csv-cell {
+  position: relative;
+  min-width: var(--typ-csv-cell-min-width);
+}
+
+.typ-csv-cell-display {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.typ-csv-cell-display-has-url {
+  padding-right: 18px;
+}
+
+a.typ-csv-cell-link {
+  color: var(--typ-csv-link);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.typ-csv-cell-edit-btn {
+  position: absolute;
+  right: var(--typ-csv-space-2);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--typ-csv-faint);
+  cursor: pointer;
+  font-size: var(--typ-csv-font-size-sm);
+  &:hover {
+    color: var(--typ-csv-accent);
+  }
+}
+
+.typ-csv-cell-input {
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--typ-csv-accent);
+  background: var(--typ-csv-bg);
+  color: var(--typ-csv-text);
+  font: inherit;
+  padding: 0 var(--typ-csv-space-1);
+  outline: none;
+  z-index: var(--typ-csv-z-editor);
+}
+
+// While editing, the cell loses its padding and the cell outline so the editor
+// sits flush against the cell border and only the editor border is highlighted.
+table.typ-csv-table td.typ-csv-editing,
+table.typ-csv-table th.typ-csv-editing {
+  padding: 0;
+}
+
+.typ-csv-active-cell.typ-csv-editing {
+  outline: none;
+}
+
+.typ-csv-cell-input-shared {
+  display: none;
+}
+
+// --- Selection ---------------------------------------------------------------
+.typ-csv-row-selected > td {
+  background: var(--typ-csv-selection-bg);
+}
+.typ-csv-row-selected > .typ-csv-row-number {
+  background: var(--typ-csv-accent);
+  color: var(--typ-csv-accent-text);
+}
+
+.typ-csv-col-selected {
+  background: var(--typ-csv-selection-bg);
+}
+
+.typ-csv-active-cell {
+  outline: 1px solid var(--typ-csv-accent);
+  outline-offset: -1px;
+}
+
+.typ-csv-search-current {
+  background: var(--typ-csv-search-highlight) !important;
+  outline: 2px solid var(--typ-csv-accent);
+  outline-offset: -2px;
+}
+
+// --- Column resize handle ----------------------------------------------------
+.typ-csv-resize-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--typ-csv-resize-handle-width);
+  height: 100%;
+  cursor: col-resize;
+  z-index: var(--typ-csv-z-pin);
+  &:hover {
+    background: var(--typ-csv-accent);
+    opacity: 0.5;
+  }
+}
+
+// --- Pin buttons -------------------------------------------------------------
+.typ-csv-pin-btn {
+  position: absolute;
+  right: var(--typ-csv-space-1);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--typ-csv-faint);
+  cursor: pointer;
+  opacity: 0;
+  font-size: var(--typ-csv-font-size-xs);
+  line-height: 1;
+  z-index: var(--typ-csv-z-pin);
+  transition: opacity 0.2s ease;
+  &.pinned {
+    opacity: 1;
+    color: var(--typ-csv-accent);
+  }
+}
+.typ-csv-row-number:hover .typ-csv-pin-row,
+.typ-csv-col-number:hover .typ-csv-pin-col {
+  opacity: 1;
+}
+
+// --- Drag feedback -----------------------------------------------------------
+.typ-csv-table .dragging {
+  opacity: 0.5;
+}
+.typ-csv-table .drag-over {
+  outline: 2px dashed var(--typ-csv-accent);
+  outline-offset: -2px;
+}
+.typ-csv-dragging-highlight {
+  background: var(--typ-csv-hover-bg);
+}
+
+// --- Virtual spacers ---------------------------------------------------------
+.typ-csv-virtual-spacer td {
+  padding: 0;
+  border: 0;
+}

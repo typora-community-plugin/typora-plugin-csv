@@ -1,0 +1,74 @@
+{
+  "buttons": {
+    "undo": "Undo",
+    "redo": "Redo",
+    "resetColumnWidth": "Reset column width",
+    "addRow": "Add row",
+    "deleteRow": "Delete row",
+    "addColumn": "Add column",
+    "deleteColumn": "Delete column",
+    "sourceMode": "Source mode",
+    "tableMode": "Table mode",
+    "toggleHeaderRow": "Header row",
+    "toggleHeaderRowOn": "Treat the first row as a header",
+    "toggleHeaderRowOff": "Stop treating the first row as a header"
+  },
+  "editBar": {
+    "placeholder": "Edit selected cell..."
+  },
+  "csv": {
+    "error": "Error",
+    "parsingFailed": "Failed to parse CSV. Please check the file format.",
+    "parseWarning": "CSV parse warning:"
+  },
+  "settings": {
+    "title": "CSV",
+    "fieldSeparator": "Field separator",
+    "fieldSeparatorDesc": "The character used to separate fields (comma, semicolon, tab or pipe).",
+    "quoteChar": "Quote character",
+    "quoteCharDesc": "Character used to enclose fields containing special characters.",
+    "delimiterAuto": "Auto",
+    "delimiterComma": "Comma (,)",
+    "delimiterSemicolon": "Semicolon (;)",
+    "delimiterTab": "Tab (\\t)",
+    "delimiterPipe": "Pipe (|)"
+  },
+  "search": {
+    "placeholder": "Search table content...",
+    "noResults": "No matching results found",
+    "moreResults": "{count} more results...",
+    "rowColumn": "Row {row}, Column {col}"
+  },
+  "table": {
+    "headerRow": "Header row",
+    "dataRow": "Data row"
+  },
+  "contextMenu": {
+    "insertRowAbove": "Insert row above",
+    "insertRowBelow": "Insert row below",
+    "deleteRow": "Delete this row",
+    "moveRowUp": "Move row up",
+    "moveRowDown": "Move row down",
+    "insertColLeft": "Insert column left",
+    "insertColRight": "Insert column right",
+    "deleteCol": "Delete this column",
+    "moveColLeft": "Move column left",
+    "moveColRight": "Move column right"
+  },
+  "commands": {
+    "createNewCsv": "Create new CSV file",
+    "openAsTable": "Open as CSV table",
+    "fileExists": "File already exists",
+    "createFailed": "Failed to create file"
+  },
+  "notifications": {
+    "undo": "Undid last action",
+    "noMoreUndo": "There is nothing more to undo",
+    "redo": "Redid action",
+    "noMoreRedo": "There is nothing more to redo",
+    "virtualDisabledBySticky": "Rows are pinned, so row virtualization is disabled for this file - large files may be slow. Unpin rows to re-enable it.",
+    "headerRowProtected": "The header row cannot be moved, deleted or overwritten.",
+    "saveFailed": "Failed to save the CSV file: {message}",
+    "loadFailed": "Failed to load the CSV file: {message}"
+  }
+}
