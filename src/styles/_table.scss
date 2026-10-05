@@ -13,7 +13,12 @@
   z-index: var(--typ-csv-z-scroll);
 }
 
-table.typ-csv-table {
+.typ-csv-view table.typ-csv-table {
+  // Sticky cells only keep their own borders when the table uses separate
+  // borders, so keep it (collapsed borders are painted by the table and vanish
+  // from sticky cells).
+  border: 0;
+  border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
   width: max-content;
@@ -25,6 +30,9 @@ table.typ-csv-table {
   th,
   td {
     box-sizing: border-box;
+    // Reset host-theme borders, then draw ONE right/bottom line per cell so
+    // adjacent borders don't overlap into a thick double line.
+    border: 0;
     border-right: 1px solid var(--typ-csv-border);
     border-bottom: 1px solid var(--typ-csv-border);
     padding: var(--typ-csv-cell-padding-y) var(--typ-csv-cell-padding-x);
@@ -32,6 +40,15 @@ table.typ-csv-table {
     text-align: left;
     vertical-align: top;
     overflow: hidden;
+  }
+
+  // Complete the outer frame (cells only draw right/bottom).
+  thead th {
+    border-top: 1px solid var(--typ-csv-border);
+  }
+  th:first-child,
+  td:first-child {
+    border-left: 1px solid var(--typ-csv-border);
   }
 
   tbody td.typ-csv-row-number,
@@ -154,8 +171,8 @@ a.typ-csv-cell-link {
 
 // While editing, the cell loses its padding and the cell outline so the editor
 // sits flush against the cell border and only the editor border is highlighted.
-table.typ-csv-table td.typ-csv-editing,
-table.typ-csv-table th.typ-csv-editing {
+.typ-csv-view table.typ-csv-table td.typ-csv-editing,
+.typ-csv-view table.typ-csv-table th.typ-csv-editing {
   padding: 0;
 }
 
