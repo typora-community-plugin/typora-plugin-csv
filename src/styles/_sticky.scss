@@ -21,7 +21,7 @@
   td.typ-csv-sticky-row-number,
   th.typ-csv-sticky-row-number {
     left: 0;
-    z-index: var(--typ-csv-z-header);
+    z-index: var(--typ-csv-z-row-number);
     background: var(--typ-csv-row-number-bg);
     border-right: 1px solid var(--typ-csv-border);
   }
