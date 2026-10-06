@@ -8,7 +8,7 @@
 
 ## 预览
 
-![](docs/assets/base.jpg)
+![](docs/assets/base.zh-CN.jpg)
 
 ## 功能
 
