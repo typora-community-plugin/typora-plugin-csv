@@ -43,6 +43,7 @@ export default defineConfig({
     replace({
       preventAssignment: true,
       'process.env.IS_DEV': 'false',
+      'process.browser': JSON.stringify(true),
     }),
     virtual(virtualModules),
     typoraPlugin(),

@@ -9,6 +9,7 @@
     "build:dev": "node build.js",
     "build": "rollup -c rollup.config.js",
     "pack": "pnpm run build && node pack.js",
+    "postinstall": "node postinstall.js",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"
