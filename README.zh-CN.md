@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文
 
-这是一个基于 [typora-community-plugin][core] 的 [Typora](https://typoraio.cn) 插件。它为 `.csv` / `.tsv` 文件提供可视化表格编辑能力，参考了 Obsidian 的表格编辑插件 csv-lite。
+这是一个基于 [typora-community-plugin][core] 的 [Typora](https://typoraio.cn) 插件。它为 `.csv` / `.tsv` 文件提供可视化表格编辑能力。参考了 Obsidian 的表格编辑插件 [csv-lite](https://github.com/LIUBINfighter/csv-lite)。
 
 在文件树中点击 `.csv` / `.tsv` 文件，即可在标签页中以可编辑表格打开：增删行列、拖拽排序、搜索、固定行列、源码编辑都在表格中完成，改动会自动写回文件。
 

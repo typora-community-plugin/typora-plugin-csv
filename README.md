@@ -2,7 +2,7 @@
 
 English | [中文](./README.zh-CN.md)
 
-This is a [Typora](https://typora.io) plugin based on [typora-community-plugin][core]. It provides visual table editing capabilities for `.csv` / `.tsv` files, inspired by Obsidian's csv-lite table editor.
+This is a [Typora](https://typora.io) plugin based on [typora-community-plugin][core]. It provides visual table editing capabilities for `.csv` / `.tsv` files, inspired by Obsidian's [csv-lite](https://github.com/LIUBINfighter/csv-lite) table editor.
 
 Click a `.csv` / `.tsv` file in the file tree to open it as an editable table in a tab: add/delete rows and columns, drag to reorder, search, pin rows and columns, and edit source—all changes are automatically written back to the file.
 
